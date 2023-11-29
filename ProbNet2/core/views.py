@@ -9,3 +9,7 @@ def home(request):
 
 def contact(request):
     return render(request, 'core/contact.html')
+
+
+def login(request):
+    return render (request, 'core/login.html')
