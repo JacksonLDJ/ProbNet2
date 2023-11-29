@@ -20,8 +20,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = 'home'
+LOGIN_REDIRECT_URL = "/app_home/"
 LOGOUT_REDIRECT_URL = "/"
 
 

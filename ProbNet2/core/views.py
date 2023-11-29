@@ -5,8 +5,8 @@ from django.contrib import messages
 # Create your views here.
 
 
-def home(request):
-    return render(request, 'core/home.html')
+def app_home(request):
+    return render(request, 'core/app_home.html')
 
 
 def contact(request):
