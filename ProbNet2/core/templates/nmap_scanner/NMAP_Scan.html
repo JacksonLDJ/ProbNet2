@@ -11,7 +11,16 @@
 <body>
     <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
         <a href="/" class="text-xl font-semibold">NMAP Scan</a>
-        <div class="space-x-6">
+        <div class ="flex items-center">
+            <div class="space-x-6">
+                <a href ="/">Home</a>
+                <a href ="{% url 'Full_Scan_History' %}">Full Scan History</a>
+                <a href ="{% url 'Full_Scan_History' %}">Quick Scan History</a>
+                <a href ="#">NMAP Scan</a>
+            </div>
+        </div>
+
+
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
                 <button type="submit"
@@ -19,6 +28,17 @@
             </form>
         </div>
     </nav>
+    
+    <div class="container mx-auto my-8">
+        <!-- Form to input the IP range -->
+        <form id="nmapForm">
+            <label for="ipRange" class="mr-2">Enter Your IP Range:</label>
+            <input type="text" id="ipRange" name="ipRange" class="mr-2" placeholder="e.g., 192.168.1.1-255">
+            <button type=""
+                class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Perform Scan</button>
+        </form>
+    </div>
+
 
     </body>
 </html>

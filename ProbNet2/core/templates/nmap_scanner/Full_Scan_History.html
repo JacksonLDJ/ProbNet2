@@ -5,13 +5,22 @@
     <meta charset="utf=8">
     <meta name="viewport" content="width=device-width", initial-scale="1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>NMAP Scan | ProbNet2</title>
+    <title>Full Scan | ProbNet2</title>
 </head>
 
 <body>
     <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
         <a href="/" class="text-xl font-semibold">Full Scan History</a>
-        <div class="space-x-6">
+        <div class ="flex items-center">
+            <div class="space-x-6">
+                <a href ="{% url 'app_home' %}">Home</a>
+                <a href ="{% url 'Full_Scan_History' %}">Full Scan History</a>
+                <a href ="{% url 'Full_Scan_History' %}">Quick Scan History</a>
+                <a href ="#">NMAP Scan</a>
+            </div>
+        </div>
+
+
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
                 <button type="submit"
@@ -19,6 +28,4 @@
             </form>
         </div>
     </nav>
-
-    </body>
-</html>
+    
