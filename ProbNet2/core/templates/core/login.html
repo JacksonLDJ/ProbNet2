@@ -10,13 +10,13 @@
     <form method="post" action=".">
         {%csrf_token%}
 
-        <div class="mb-3">
+        <div id="" class="mb-3">
             <label class="inline-block mb-2">Email:</label>
             {{ form.username }}
         </div>
 
         <div class="mb-3">
-            <label class="inline-block mb-2">Password:</label>
+            <label id class="inline-block mb-2">Password:</label>
             {{ form.password }}
         </div>
 

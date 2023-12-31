@@ -24,12 +24,11 @@ class Vulnerability_Data(models.Model):
     Vuln_ID = models.CharField(max_length=256, primary_key=True)
     Vuln_Name = models.CharField(max_length=256)
     Vuln_Desc = models.CharField(max_length=256)
-    Vuln_Severity = models.DecimalField(max_digits=3, decimal_places=1, validators=[models.MinValueValidator(1.0), models.MaxValueValidtator(10.0)])
 
 class Network_Services(models.Model):
     Service_ID = models.CharField(max_length=256, primary_key=True)
-    Service_Name = models.CharField(max_length=True)
-    Port_Number = models.CharField(max_length=True)
+    Service_Name = models.CharField(max_length=256)
+    Port_Number = models.CharField(max_length=256)
 
 class Scan_History():
 
