@@ -31,14 +31,13 @@
     
     <div class="container mx-auto my-8">
         <!-- Form to input the IP range -->
-        <form id="nmapForm">
-            <label for="ipRange" class="mr-2">Enter Your IP Range:</label>
-            <input type="text" id="ipRange" name="ipRange" class="mr-2" placeholder="e.g., 192.168.1.1-255">
-            <button type=""
-                class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Perform Scan</button>
+        <form id="nmapForm" method="post" action="{% url 'perform_nmap_scan' %}">
+            {% csrf_token %}
+            <label for="ipRange" class="mr-2">Enter Your IP Address:</label>
+            <input type="text" id="ipRange" name="ip_range" class="mr-2" placeholder="e.g., 192.168.1.1-255">
+            <button type="submit" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Perform Scan</button>
         </form>
     </div>
+</body>
 
-
-    </body>
 </html>

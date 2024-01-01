@@ -3,6 +3,9 @@ from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from .forms import NmapForm
+from ProbNet2.scanner import NMAP_Scanner
 
 # Create your views here.
 
@@ -34,3 +37,21 @@ def Full_Scan_History(request):
 def Quick_Scan_History(request):
      return render(request, 'nmap_scanner/Quick_Scan_History.html')
 
+@login_required
+def perform_nmap_scan(request):
+    if request.method == 'POST':
+        form = NmapForm(request.POST)
+        if form.is_valid():
+            # Get the IP range from the form
+            ip_range = form.cleaned_data['ip_range']
+
+            # Perform NMAP scan
+            nmap_scanner = NMAP_Scanner()
+            scan_result = nmap_scanner.NMAP_Scan_And_Save(ip_range)
+
+            # Redirect to a page displaying the scan result or any other appropriate page
+            return HttpResponseRedirect('nmap_scanner/app_home')
+    else:
+        form = NmapForm()
+
+    return render(request, 'nmap_scanner/app_home', {'form': form})
