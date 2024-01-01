@@ -50,8 +50,8 @@ def perform_nmap_scan(request):
             scan_result = nmap_scanner.NMAP_Scan_And_Save(ip_range)
 
             # Redirect to a page displaying the scan result or any other appropriate page
-            return HttpResponseRedirect('nmap_scanner/app_home')
+            return HttpResponseRedirect('app_home.html')
     else:
         form = NmapForm()
 
-    return render(request, 'nmap_scanner/app_home', {'form': form})
+    return render(request, 'app_home.html', {'form': form})

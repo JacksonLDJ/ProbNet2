@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Device_Data
+
+
+admin.site.register(Device_Data)
