@@ -30,6 +30,6 @@ class Device_Data(models.Model):
 class Port(models.Model):
     protocol = models.CharField(max_length = 256)
     portid = models.PositiveSmallIntegerField()
-    Reason = models.CharField(max_length = 256)
+    reason = models.CharField(max_length = 256)
     reason_ttl = models.CharField(max_length = 256)
     device_data = models.ForeignKey(Device_Data, on_delete=models.CASCADE, related_name='ports')

@@ -1,64 +1,11 @@
 # Import necessary modules and classes
 import nmap3
-from dataclasses import dataclass
-from typing import List, Optional, Dict
 from core.models import Device_Data, OS_Info, Port
 from django.utils import timezone
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-
-# Define data classes and NMAP_Scanner class
-@dataclass
-class OsClass:
-    type: str
-    vendor: str
-    osfamily: str
-    osgen: str
-    accuracy: str
-
-@dataclass
-class OsMatch:
-    name: str
-    accuracy: str
-    line: str
-    osclass: OsClass
-    cpe: str
-
-@dataclass
-class Service:
-    name: str
-    product: str
-    ostype: str
-    method: str
-    conf: str
-
-@dataclass
-class Script:
-    name: str
-    raw: str
-    data: Dict[str, str]
-
-@dataclass
-class Port:
-    protocol: str
-    portid: str
-    state: str
-    reason: str
-    reason_ttl: str
-    service: Service
-    cpe: List[Dict[str, Optional[str]]]
-    scripts: List[Script]
-
-@dataclass
-class Host:
-    osmatch: List[OsMatch]
-    ports: List[Port]
-
-@dataclass
-class Root:
-    hosts: Dict[str, Host]
 
 class NMAP_Scanner():
 
@@ -69,17 +16,8 @@ class NMAP_Scanner():
 
     def save_data(self, scan_result):
         for host_key, host_data in scan_result['hosts'].items(): 
-            os_info_instance = self.extract_operating_system(host_data)
-            #If nothing returns, it's not a host so we want to ignore the data
-            if os_info_instance is not None:
-                # Create Device_Data entry
-                device_data = Device_Data.objects.create(
-                    IP_Address=host_key,
-                    Operating_System=os_info_instance,  # Associate the OS_Info instance
-                )
-
-                # Save the entry
-                device_data.save()
+            device_data = self.extract_operating_system(host_data, host_key)
+            self.extract_port_data(host_data, device_data)
             
 
     def NMAP_Scan(self, target, args="-A"):
@@ -89,7 +27,7 @@ class NMAP_Scanner():
         }
         return result
 
-    def extract_operating_system(self, host_data):
+    def extract_operating_system(self, host_data, host_key):
         if 'osmatch' in host_data and len(host_data['osmatch']) > 0: #Checks for osmatch in host_data, length of osmatch array is greater than 0
             osmatch = host_data['osmatch'][0]
 
@@ -104,19 +42,28 @@ class NMAP_Scanner():
                     accuracy=osclass_data.get('accuracy', '')
                 )
 
-                return os_info_instance
+                # Create Device_Data entry
+                device_data = Device_Data.objects.create(
+                    IP_Address=host_key,
+                    Operating_System=os_info_instance,  # Associate the OS_Info instance
+                )
+
+                # Save the entry
+                device_data.save()
+                return device_data
 
         return None
     
 
-    def extract_port_data(self, host_data):
-        if "ports" in host_data["ports"]:
+    def extract_port_data(self, host_data, device_data):
+        if "ports" in host_data:
             for port_data in host_data["ports"]:
-                port = Port(
+                port = Port.objects.create(
                     protocol=port_data.get("protocol", ''),
-                    protid=port_data.get('portid', ''),
+                    portid=port_data.get('portid', ''),
                     reason=port_data.get('reason',''),
-                    reason_ttl=port_data.get('reason.ttl',''),
+                    reason_ttl=port_data.get('reason_ttl',''),
+                    device_data = device_data
                 )
 
                 port.save()
