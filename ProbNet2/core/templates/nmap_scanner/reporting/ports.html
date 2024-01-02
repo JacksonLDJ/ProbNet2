@@ -22,21 +22,17 @@
 
     <table>
         <tr>
-            <th>IP Address</th>
-            <th>OS</th>
-            <th>Version</th>
-            <th>Vendor</th>
-            <th>Ports Scanned</th>
-            <th>Created On</th>
+            <th>Portid</th>
+            <th>reason</th>
+            <th>reason_ttl</th>
+            <th>device_data</th>
         </tr>
         {% for row in data %}
         <tr>
-            <td>{{ row.IP_Address}}</td>
-            <td>{{ row.Operating_System.osfamily }}</td>
-            <td>{{ row.Operating_System.osgen }}</td>
-            <td>{{ row.Operating_System.vendor }}</td>
-            <td>{{ row.port_count }}</td>
-            <td>{{ row.created_on }}</td>
+            <td>{{ row.portid}}</td>
+            <td>{{ row.reason }}</td>
+            <td>{{ row.reason_ttl }}</td>
+            <td>{{ row.device_data }}</td>
         </tr>
         {% endfor %}
     </table>

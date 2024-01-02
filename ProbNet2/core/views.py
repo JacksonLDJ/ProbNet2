@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from .forms import NmapForm
 from ProbNet2.scanner import NMAP_Scanner
-from core.data import get_device_data
+from core.data import get_device_data, get_ports_by_device
 
 # Create your views here.
 
@@ -39,11 +39,19 @@ def Quick_Scan_History(request):
      return render(request, 'nmap_scanner/Quick_Scan_History.html')
 
 @login_required
-def reporting(request):
+def reporting_devices(request):
      
-     return render(request, 'nmap_scanner/Reporting.html', {
+     return render(request, 'nmap_scanner/reporting/devices.html', {
           "data":get_device_data()
      })
+
+@login_required
+def reporting_ports(request, device_id):
+     
+     return render(request, 'nmap_scanner/reporting/ports.html', {
+          "data":get_ports_by_device(device_id)
+     })
+
 
 @login_required
 def perform_nmap_scan(request):
@@ -75,3 +83,6 @@ def netsweeper(request):
 
             nmap_scanner = NMAP_Scanner()
             nmap_scanner.netsweeper(ip_range)
+
+
+            
