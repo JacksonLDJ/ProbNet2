@@ -4,7 +4,7 @@ from core.models import Device_Data, OS_Info, Port
 from django.utils import timezone
 
 
-
+#Creates the NMAP Scanner class
 class NMAP_Scanner():
 
     def NMAP_Scan_And_Save(self, target, args="-A"):
@@ -25,7 +25,7 @@ class NMAP_Scanner():
         return result
 
     def extract_operating_system(self, host_data, host_key):
-        if 'osmatch' in host_data and len(host_data['osmatch']) > 0: #Checks for osmatch in host_data, length of osmatch array is greater than 0
+        if 'osmatch' in host_data and len(host_data['osmatch']) > 0: #Checks for osmatch in host_data, length of osmatch dictionary is greater than 0
             osmatch = host_data['osmatch'][0]
 
             if 'osclass' in osmatch:
