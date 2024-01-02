@@ -2,16 +2,13 @@
 import nmap3
 from core.models import Device_Data, OS_Info, Port
 from django.utils import timezone
-import logging
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+
 
 class NMAP_Scanner():
 
     def NMAP_Scan_And_Save(self, target, args="-A"):
         scan_result = self.NMAP_Scan(target, args)
-        logger.debug(scan_result)
         self.save_data(scan_result)
 
     def save_data(self, scan_result):
@@ -67,4 +64,12 @@ class NMAP_Scanner():
                 )
 
                 port.save()
+
+
+    def netsweeper(self, target):
+        scan = nmap3.NmapHostDiscovery()
+
+        net_scan = scan.nmap_no_portscan(target)
+
+
 

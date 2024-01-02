@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from core.views import app_home, contact, logout, perform_nmap_scan, Full_Scan_History, Quick_Scan_History, NMAP_Scan
+from core.views import app_home, contact, logout, perform_nmap_scan, Full_Scan_History, Quick_Scan_History, NMAP_Scan, netsweeper, reporting
 from django.contrib.auth.views import LoginView, LogoutView
 from core.forms import LoginForm
 
@@ -17,4 +17,6 @@ urlpatterns = [
     path ('perform_nmap_scan/', perform_nmap_scan, name='perform_nmap_scan' ),
     path ('Full_Scan_History/', Full_Scan_History, name='Full_Scan_History' ),
     path ('Quick_Scan_History/', Quick_Scan_History, name='Quick_Scan_History' ),
+    path ('netsweeper/', netsweeper, name='netsweeper' ),
+    path ('reporting/', reporting, name='reporting' ),
 ]

@@ -19,17 +19,15 @@
         </div>
     </nav>
 
-<body>
-    <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
-        <a href="/" class="text-xl font-semibold">Quick Scan History</a>
-        <div class="space-x-6">
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit"
-                    class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Logout</button>
-            </form>
-        </div>
-    </nav>
+    <div class="container mx-auto my-8">
+        <!-- Form to input the IP range -->
+        <form id="netsweeper" method="post" action="{% url 'netsweeper' %}">
+            {% csrf_token %}
+            <label for="ipRange" class="mr-2">Enter Your IP Address:</label>
+            <input type="text" id="ipRange" name="ip_range" class="mr-2" placeholder="e.g., 192.168.1.1-255">
+            <button type="submit" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Perform Scan</button>
+        </form>
+    </div>
 
     </body>
 </html>
