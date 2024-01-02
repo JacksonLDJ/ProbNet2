@@ -2,7 +2,7 @@
 import nmap3
 from dataclasses import dataclass
 from typing import List, Optional, Dict
-from core.models import Device_Data
+from core.models import Device_Data, OS_Info
 from django.utils import timezone
 import logging
 
@@ -65,16 +65,19 @@ class NMAP_Scanner():
     def NMAP_Scan_And_Save(self, target, args="-A"):
         scan_result = self.NMAP_Scan(target, args)
         logger.debug(scan_result)
-        self.save_device_data(scan_result)
+        self.save_data(scan_result)
 
-    def save_device_data(self, scan_result):
+    def save_data(self, scan_result):
         for host_key, host_data in scan_result['hosts'].items():
+            os_info_instance = self.extract_operating_system(host_data)
+
             # Create Device_Data entry
             device_data = Device_Data.objects.create(
                 Device_ID=host_key,
                 IP_Address=host_key,
-                Operating_Sytem=self.extract_operating_system(host_data),
+                Operating_System=os_info_instance,  # Associate the OS_Info instance
             )
+
             # Save the entry
             device_data.save()
 
@@ -87,8 +90,19 @@ class NMAP_Scanner():
 
     def extract_operating_system(self, host_data):
         if 'osmatch' in host_data and host_data['osmatch']:
-            # Assuming the first osmatch entry has the operating system information
             osmatch = host_data['osmatch'][0]
-            if 'name' in osmatch:
-                return osmatch['name']
-        return ""
+
+            if 'osclass' in osmatch:
+                osclass_data = osmatch['osclass']
+
+                os_info_instance = OS_Info.objects.create(
+                    type=osclass_data.get('type', ''),
+                    vendor=osclass_data.get('vendor', ''),
+                    osfamily=osclass_data.get('osfamily', ''),
+                    osgen=osclass_data.get('osgen', ''),
+                    accuracy=osclass_data.get('accuracy', '')
+                )
+
+                return os_info_instance
+
+        return None
