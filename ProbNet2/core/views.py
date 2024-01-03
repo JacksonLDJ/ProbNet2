@@ -36,7 +36,7 @@ def Full_Scan_History(request):
 
 @login_required
 def Quick_Scan_History(request):
-     return render(request, 'nmap_scanner/Quick_Scan_History.html')
+     return render(request, 'nmap_scanner/netsweeper_scan.html')
 
 @login_required
 def reporting_devices(request):
