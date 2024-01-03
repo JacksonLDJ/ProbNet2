@@ -1,37 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf=8">
-    <meta name="viewport" content="width=device-width" , initial-scale="1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Quick Scan History | ProbNet2</title>
 </head>
 
-<body>
-    <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
+<body class="font-sans antialiased bg-white">
+
+    <nav class="bg-white py-6 px-6 border-b border-gray-200 flex justify-between items-center">
         <a href="/" class="text-xl font-semibold">ProbNet2</a>
         {% include "../../core/nav_bar.html" %}
     </nav>
 
-    <table>
-        <tr>
-            <th>Portid</th>
-            <th>reason</th>
-            <th>reason_ttl</th>
-            <th>device_data</th>
-        </tr>
-        {% for row in data %}
-        <tr>
-            <td>{{ row.portid}}</td>
-            <td>{{ row.reason }}</td>
-            <td>{{ row.reason_ttl }}</td>
-            <td>{{ row.device_data }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="container mx-auto mt-6">
+
+        <table class="min-w-full bg-white border border-gray-300 text-center">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Portid</th>
+                    <th class="py-2 px-4 border-b">Reason</th>
+                    <th class="py-2 px-4 border-b">Reason TTL</th>
+                    <th class="py-2 px-4 border-b">Device Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b">{{ row.portid }}</td>
+                    <td class="py-2 px-4 border-b">{{ row.reason }}</td>
+                    <td class="py-2 px-4 border-b">{{ row.reason_ttl }}</td>
+                    <td class="py-2 px-4 border-b">{{ row.device_data }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
 
 </body>
-
 
 </html>
