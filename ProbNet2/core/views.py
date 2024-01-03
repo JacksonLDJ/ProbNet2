@@ -32,7 +32,7 @@ def NMAP_Scan(request):
 
 @login_required
 def Full_Scan_History(request):
-     return render(request, 'nmap_scanner/Full_Scan_History.html')
+     return render(request, 'nmap_scanner/search.html')
 
 @login_required
 def Quick_Scan_History(request):

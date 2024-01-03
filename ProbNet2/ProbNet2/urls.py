@@ -15,7 +15,7 @@ urlpatterns = [
     path('', LoginView.as_view(template_name='core/login.html', authentication_form=LoginForm), name='home',),
     path ('NMAP_Scan/', NMAP_Scan, name='NMAP_Scan' ),
     path ('perform_nmap_scan/', perform_nmap_scan, name='perform_nmap_scan' ),
-    path ('Full_Scan_History/', Full_Scan_History, name='Full_Scan_History' ),
+    path ('search/', Full_Scan_History, name='search' ),
     path ('netsweeper_scan/', Quick_Scan_History, name='netsweeper_scan' ),
     path ('netsweeper/', netsweeper, name='netsweeper' ),
     path ('reporting/devices/', reporting_devices, name='reporting_devices' ),
