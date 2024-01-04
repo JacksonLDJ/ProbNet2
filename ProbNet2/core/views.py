@@ -11,6 +11,7 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import inch
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from core.models import Device_Data, OS_Info
 
@@ -72,14 +73,14 @@ def perform_nmap_scan(request):
             scan_result = nmap_scanner.NMAP_Scan_And_Save(ip_address)
 
             # Redirect to a page displaying the reporting section.
-            return HttpResponseRedirect('/device.html/')
+            return HttpResponseRedirect('/reporting/devices/')
     else:
         form = NmapForm()
 
     return render(request, 'app_home.html', {'form': form})
 
 @login_required
-#Login to perform Netsweeper function, usaes the NMAP_Scanner class in ProbNet2 > scanner.py and then the function netsweeper.
+#Login to perform Netsweeper function, uses the NMAP_Scanner class in ProbNet2 > scanner.py and then the function netsweeper.
 def netsweeper(request):
      if request.method == 'POST':
         form = NmapForm(request.POST)
@@ -133,6 +134,25 @@ def generate_pdf(request):
     buf.seek(0)
 
     return FileResponse(buf, as_attachment=True, filename="test.pdf")
+
+
+@login_required
+def reporting_device(request):
+    device_data = get_device_data()
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(device_data, 10)#Change number to change number of devices displayed per page
+
+    try:
+        devices = paginator.page(page)
+    except PageNotAnInteger:
+        devices = paginator.page(1)
+    except EmptyPage:
+        devices = paginator.page(paginator.num_pages)
+
+    return render(request, 'nmap_scaner/reporting/devices.html', {
+        "data": devices
+    })
 
 
 

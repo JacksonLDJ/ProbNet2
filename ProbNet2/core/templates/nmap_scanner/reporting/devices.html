@@ -34,6 +34,7 @@
                 </tr>
             </thead>
             <tbody>
+                <!--Displaying table data resources used: https://stackoverflow.com/questions/7287027/displaying-a-table-in-django-from-database-->
                 {% for row in data %}
                 <tr class="hover:bg-gray-100">
                     <td class="py-2 px-4 border-b">{{ row.IP_Address }}</td>
@@ -49,7 +50,27 @@
             </tbody>
         </table>
 
-    </div>
+        <!-- Display pagination links -->
+<div class="mt-4">
+    <span class="mr-2">Page {{ data.number }} of {{ data.paginator.num_pages }}.</span>
+    {% if data.has_previous %}
+    <a href="?page=1">first</a>
+    <a href="?page={{ data.previous_page_number }}">previous</a>
+    {% endif %}
+
+    {% for i in data.paginator.page_range %}
+    {% if data.number == i %}
+    <span class="border border-blue-500 px-3 py-1 rounded">{{ i }}</span>
+    {% else %}
+    <a href="?page={{ i }}" class="border border-gray-300 hover:border-blue-500 px-3 py-1 rounded">{{ i }}</a>
+    {% endif %}
+    {% endfor %}
+
+    {% if data.has_next %}
+    <a href="?page={{ data.next_page_number }}">next</a>
+    <a href="?page={{ data.paginator.num_pages }}">last</a>
+    {% endif %}
+</div>
 
 </body>
 

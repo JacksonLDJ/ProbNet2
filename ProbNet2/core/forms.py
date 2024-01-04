@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
-
+#Forms which are used for the login page of the website.
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
@@ -17,7 +17,7 @@ class LoginForm(AuthenticationForm):
 
 
 
-
+#Forms used for Device Scan and Netsweeper scans.
 class NmapForm(forms.Form):
     ip_address = forms.CharField(label='Enter Your IP Range', max_length=255)
 

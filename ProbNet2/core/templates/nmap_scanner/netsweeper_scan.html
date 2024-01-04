@@ -10,11 +10,11 @@
 <body>
     <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
         <a href="{% url 'app_home' %}" class="text-xl font-semibold">Netsweeper Scan</a>
-        {% include "../core/nav_bar.html" %}
+        {% include "../core/nav_bar.html" %} <!--Brings in the nav_bar.html from templates>core, changes to NAV bar should be made there.-->
     </nav>
 
     <div class="container mx-auto my-8">
-        <!-- Form to input the IP range -->
+        <!-- Form to input the IP address for scan -->
         <form id="netsweeper" method="post" action="{% url 'netsweeper' %}">
             {% csrf_token %}
             <label for="ipRange" class="mr-2">Enter Your IP Address:</label>
