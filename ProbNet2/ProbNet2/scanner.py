@@ -39,13 +39,23 @@ class NMAP_Scanner():
                     accuracy=osclass_data.get('accuracy', '')
                 )
 
+                #Extract MAC Address
+                mac_address = host_data.get('macaddress', {}).get('addr', '')
+                
+
+
                 # Create Device_Data entry
                 device_data = Device_Data.objects.create(
                     IP_Address=host_key,
                     Operating_System=os_info_instance,  # Associate the OS_Info instance
+                    MAC_Address = mac_address
+
+
                 )
+                
 
                 # Save the entry
+                os_info_instance.save()
                 device_data.save()
                 return device_data
 

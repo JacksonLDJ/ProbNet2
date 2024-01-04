@@ -25,6 +25,7 @@
             <thead>
                 <tr>
                     <th class="py-2 px-4 border-b">IP Address</th>
+                    <th class="py-2 px-4 border-b">MAC Address</th>
                     <th class="py-2 px-4 border-b">OS</th>
                     <th class="py-2 px-4 border-b">Version</th>
                     <th class="py-2 px-4 border-b">Vendor</th>
@@ -36,6 +37,7 @@
                 {% for row in data %}
                 <tr class="hover:bg-gray-100">
                     <td class="py-2 px-4 border-b">{{ row.IP_Address }}</td>
+                    <td class="py-2 px-4 border-b">{{ row.MAC_Address }}</td>
                     <td class="py-2 px-4 border-b">{{ row.Operating_System.osfamily }}</td>
                     <td class="py-2 px-4 border-b">{{ row.Operating_System.osgen }}</td>
                     <td class="py-2 px-4 border-b">{{ row.Operating_System.vendor }}</td>
