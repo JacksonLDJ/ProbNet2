@@ -59,11 +59,11 @@ def perform_nmap_scan(request):
         form = NmapForm(request.POST)
         if form.is_valid():
             # Get the IP range from the form
-            ip_range = form.cleaned_data['ip_range']
+            ip_address = form.cleaned_data['ip_address']
 
             # Perform NMAP scan
             nmap_scanner = NMAP_Scanner()
-            scan_result = nmap_scanner.NMAP_Scan_And_Save(ip_range)
+            scan_result = nmap_scanner.NMAP_Scan_And_Save(ip_address)
 
             # Redirect to a page displaying the scan result or any other appropriate page
             return HttpResponseRedirect('/app_home/')

@@ -21,7 +21,7 @@ error_message = {
 
 
 class NmapForm(forms.Form):
-    ip_range = forms.CharField(label='Enter Your IP Range', max_length=255)
+    ip_address = forms.CharField(label='Enter Your IP Range', max_length=255)
 
 class Netsweeper(forms.Form):
     ip_range = forms.CharField(label='Enter Your IP Range', max_length=255)
