@@ -23,8 +23,7 @@ class Device_Data(models.Model):
     MAC_Address = models.CharField(max_length=256)
     Hardware_Details = models.CharField(max_length=256, null=True, blank=True)
 
-    def __str__(self):
-        return f"{self.IP_Address}"
+    
 
 
 class Port(models.Model):

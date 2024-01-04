@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from core.views import app_home, contact, logout, perform_nmap_scan, Full_Scan_History, Quick_Scan_History, NMAP_Scan, netsweeper, reporting_devices, reporting_ports
+from core.views import app_home, contact, logout, perform_nmap_scan, Full_Scan_History, Quick_Scan_History, NMAP_Scan, netsweeper, reporting_devices, reporting_ports, generate_pdf
 from django.contrib.auth.views import LoginView, LogoutView
 from core.forms import LoginForm
 
@@ -20,4 +20,5 @@ urlpatterns = [
     path ('netsweeper/', netsweeper, name='netsweeper' ),
     path ('reporting/devices/', reporting_devices, name='reporting_devices' ),
     path ('reporting/ports/<int:device_id>/', reporting_ports, name='reporting_ports' ),
+    path ('generate_pdf/', generate_pdf, name="generate_pdf" )
 ]
