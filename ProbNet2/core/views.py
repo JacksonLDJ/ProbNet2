@@ -58,28 +58,28 @@ def reporting_ports(request, device_id):
           "data":get_ports_by_device(device_id)
      })
 
-
+#Logic to perform NMAP Scan, uses the NMAP_Scanner class in ProbNet2>scanner.py and NmapForm Core>forms.py to perform the scan.
 @login_required
 def perform_nmap_scan(request):
     if request.method == 'POST':
         form = NmapForm(request.POST)
         if form.is_valid():
-            # Get the IP range from the form
+            # Get the IP address from the form
             ip_address = form.cleaned_data['ip_address']
 
             # Perform NMAP scan
             nmap_scanner = NMAP_Scanner()
             scan_result = nmap_scanner.NMAP_Scan_And_Save(ip_address)
 
-            # Redirect to a page displaying the scan result or any other appropriate page
-            return HttpResponseRedirect('/app_home/')
+            # Redirect to a page displaying the reporting section.
+            return HttpResponseRedirect('/device.html/')
     else:
         form = NmapForm()
 
     return render(request, 'app_home.html', {'form': form})
 
 @login_required
-
+#Login to perform Netsweeper function, usaes the NMAP_Scanner class in ProbNet2 > scanner.py and then the function netsweeper.
 def netsweeper(request):
      if request.method == 'POST':
         form = NmapForm(request.POST)
@@ -92,7 +92,7 @@ def netsweeper(request):
 
 
 @login_required
-
+#Resources used for PDF Gen: https://docs.djangoproject.com/en/5.0/howto/outputting-pdf/ | https://www.geeksforgeeks.org/generate-a-pdf-in-django/
 def generate_pdf(request):
     buf = io.BytesIO()
     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
@@ -113,13 +113,13 @@ def generate_pdf(request):
         if textob.getX() != inch:  # Check if not at the beginning of the page
             textob.textLine('')
 
-        # Start a new block for the IP address
+        # Host Information - Pulls from the Device_Data model for data.
         textob.textLine(f"IP Address: {device.IP_Address}")
         textob.textLine(f"Created On: {device.created_on.strftime('%Y-%m-%d %H:%M:%S')}")
         textob.textLine(f"MAC Address: {device.MAC_Address}")
         textob.textLine(f"Hardware Details: {device.Hardware_Details if device.Hardware_Details else 'None'}")
 
-        # Add OS_Info information
+        # OS_Info information - pulls from OS_Info model for data | If blank it returns nothing.
         textob.textLine(f"Operating System Type: {os_info.type if os_info else ''}")
         textob.textLine(f"Operating System Vendor: {os_info.vendor if os_info else ''}")
         textob.textLine(f"Operating System Family: {os_info.osfamily if os_info else ''}")

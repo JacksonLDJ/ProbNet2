@@ -18,7 +18,7 @@
         <form id="netsweeper" method="post" action="{% url 'netsweeper' %}">
             {% csrf_token %}
             <label for="ipRange" class="mr-2">Enter Your IP Address:</label>
-            <input type="text" id="ipRange" name="ip_range" class="mr-2" placeholder="e.g., 192.168.1.1-255">
+            <input type="text" id="ipRange" name="ip_range" class="mr-2" placeholder="e.g., 192.168.1.1">
             <button type="submit" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Perform Scan</button>
         </form>
     </div>

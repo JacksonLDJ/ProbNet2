@@ -15,9 +15,7 @@ class LoginForm(AuthenticationForm):
     }))
 
 
-error_message = {
-    'invalid_login' : 'Invalid login credentials Please try again.'
-}
+
 
 
 class NmapForm(forms.Form):

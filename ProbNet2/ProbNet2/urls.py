@@ -3,7 +3,7 @@ from django.urls import path
 from core.views import app_home, contact, logout, perform_nmap_scan, Full_Scan_History, Quick_Scan_History, NMAP_Scan, netsweeper, reporting_devices, reporting_ports, generate_pdf
 from django.contrib.auth.views import LoginView, LogoutView
 from core.forms import LoginForm
-
+#Resources used: https://docs.djangoproject.com/en/5.0/topics/http/urls/
 
 
 
