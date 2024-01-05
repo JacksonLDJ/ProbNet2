@@ -34,3 +34,16 @@ class Port(models.Model):
     reason = models.CharField(max_length = 256)
     reason_ttl = models.CharField(max_length = 256)
     device_data = models.ForeignKey(Device_Data, on_delete=models.CASCADE, related_name='ports')
+
+
+#class Customer_Data(models.Model):
+    #name = models.CharField()
+
+
+class Netsweeper_Result(models.Model):
+    ip_address = models.CharField(max_length = 256)
+    mac_address = models.CharField(max_length = 256)
+    hostname = models.CharField(max_length = 256)
+    vendor = models.CharField(max_length = 256)
+    state = models.CharField(max_length = 256)
+    #customer_data = models.ForeignKey(Customer_Data, on_delete=models.CASCADE, related_name='customers')

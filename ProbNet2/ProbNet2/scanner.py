@@ -1,6 +1,6 @@
 # Import necessary modules and classes
 import nmap3
-from core.models import Device_Data, OS_Info, Port
+from core.models import Device_Data, OS_Info, Port, Netsweeper_Result
 from django.utils import timezone
 
 #Resources used for NMAP Scanner: https://pypi.org/project/python-nmap/ | Neo1277's GitHub NMAP Scanner Project: https://github.com/Neo1277/nmap-scanner-django/tree/main#pip-install--r-requirementstxt
@@ -90,13 +90,27 @@ class NMAP_Scanner():
         net_scan = scan.nmap_no_portscan(target)
 
         for ip_address, data in net_scan.items():
+                 if 'mac_address' not in data: #Ensures that MAC address is in data generated, resolves ARP issue
+                     continue 
                  mac_address_data = data.get('macaddress', {})
                  mac_address = mac_address_data.get('addr', '') if mac_address_data else ''
 
-                 hostnames = data.get('hostname', [{}])
-                 hostname = hostnames[0].get('name', '') if hostnames else ''
+                 hostname_data = data.get('hostname', [{}])
+                 hostname = hostname_data[0].get('name', '') if hostname_data else ''
 
+                 vendor_data = data.get('vendor', {})
+                 vendor = vendor_data.get('name', '') if vendor_data else ''
+                 
+                 state_data = data.get('state', {})
+                 state = state_data.get('state', '') if state_data else ''
 
+                 ip_address = ip_address
 
-
-
+                 if state.lower() == 'up':
+                     Netsweeper_Result.objects.create(
+                         ip_address = ip_address,
+                         mac_address = mac_address,
+                         hostname = hostname,
+                         vendor = vendor,
+                         state = state
+                     )
