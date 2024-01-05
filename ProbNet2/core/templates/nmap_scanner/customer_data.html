@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Netsweeper Results | ProbNet2</title>
+</head>
+
+<body class="font-sans antialiased bg-white">
+
+    <nav class="bg-white py-6 px-6 border-b border-gray-200 flex justify-between items-center">
+        <a href="{% url 'app_home' %}" class="text-xl font-semibold">ProbNet2</a>
+        {% include "../core/nav_bar.html" %}
+    </nav>
+
+
+    <div class="container mx-auto my-8">
+            <form method="post" action="{% url 'submit_customer_data' %}">
+            {% csrf_token %}
+            {{ form.company_name.label_tag }}
+            {{ form.company_name }}
+            
+            {{ form.location.label_tag }}
+            {{ form.location }}
+            
+            {{ form.contact_name.label_tag }}
+            {{ form.contact_name }}
+            
+            {{ form.contact_position.label_tag }}
+            {{ form.contact_position }}
+            
+            {{ form.contact_number.label_tag }}
+            {{ form.contact_number }}
+            
+            {{ form.initial_ip_range.label_tag }}
+            {{ form.initial_ip_range }}
+                
+            <button type="submit"
+                    class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Submit</button>
+            </form>
+    </div>
+
+    
+
+
+
+</body>
+
+</html>
+
+

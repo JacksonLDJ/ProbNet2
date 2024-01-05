@@ -84,7 +84,7 @@ class NMAP_Scanner():
                 port.save()
 
 
-    def netsweeper(self, target):
+    def netsweeper(self, target, customer_id):
         scan = nmap3.NmapHostDiscovery()
 
         net_scan = scan.nmap_no_portscan(target)
@@ -106,11 +106,13 @@ class NMAP_Scanner():
 
                  ip_address = ip_address
 
+                 customer_id_checked = customer_id if customer_id and customer_id != 1 else None
                  if state.lower() == 'up':
                      Netsweeper_Result.objects.create(
                          ip_address = ip_address,
                          mac_address = mac_address,
                          hostname = hostname,
                          vendor = vendor,
-                         state = state
+                         state = state, 
+                         customer_id = customer_id_checked
                      )

@@ -30,9 +30,8 @@ class Device_Data(models.Model):
     updated_on = models.DateTimeField(auto_now=True, help_text="Time and date this was updated")
     MAC_Address = models.CharField(max_length=256)
     Hardware_Details = models.CharField(max_length=256, null=True, blank=True)
-    customer_data = models.ForeignKey(Customer_Data, on_delete=models.CASCADE, related_name='customers')
+    customer_data = models.ForeignKey(Customer_Data, on_delete=models.CASCADE, related_name='customers', null = True, blank = True)
     
-
 
 class Port(models.Model):
     protocol = models.CharField(max_length = 256)
@@ -47,4 +46,4 @@ class Netsweeper_Result(models.Model):
     hostname = models.CharField(max_length = 256)
     vendor = models.CharField(max_length = 256)
     state = models.CharField(max_length = 256)
-    customer_data = models.ForeignKey(Customer_Data, on_delete=models.CASCADE, related_name='customers')
+    customer_data = models.ForeignKey(Customer_Data, on_delete=models.CASCADE, related_name='netsweeper_customers', null = True, blank = True)

@@ -40,12 +40,60 @@ class NmapForm(forms.Form):
         validators=[ip_validator])
 
 
-class NetsweeperForm(forms.Form):
+class NetsweeperForm(forms.Form):#https://stackoverflow.com/questions/29247654/python-how-to-use-constructor-with-django-form-class
+    
+    customer_drop_down = forms.ChoiceField()
+
     ip_range = forms.CharField(
         widget=forms.TextInput(attrs={
             'placeholder': 'IP Address',
             'class': 'w-full py-4 px-6 rounded-xl'
         }),
         label='Enter Your IP Range', 
-        max_length=255,
-        validators=[ip_validator_range])
+        max_length=255)
+        
+    
+
+class CustomerForm(forms.Form): 
+
+    company_name = forms.CharField(widget=forms.TextInput(attrs={
+            'placeholder': 'Company Name',
+            'class': 'w-64 py-4 px-6 rounded-xl'
+        }),
+        label='Enter Company Name:', 
+        max_length=255,)
+    
+    location = forms.CharField(widget=forms.TextInput(attrs={
+            'placeholder': 'Company Location',
+            'class': 'w-64 py-4 px-6 rounded-xl'
+        }),
+        label='Enter Company Name:', 
+        max_length=255,)
+    
+    contact_name = forms.CharField(widget=forms.TextInput(attrs={
+            'placeholder': 'Contact name',
+            'class': 'w-64 py-4 px-6 rounded-xl'
+        }),
+        label='Enter the contact name:', 
+        max_length=255,)
+    
+    contact_position = forms.CharField(widget=forms.TextInput(attrs={
+            'placeholder': 'Contact Position',
+            'class': 'w-64 py-4 px-6 rounded-xl'
+        }),
+        label='Enter the role of the contact', 
+        max_length=255,)
+    
+    contact_number = forms.CharField(widget=forms.TextInput(attrs={
+            'placeholder': 'Contact Number',
+            'class': 'w-64 py-4 px-6 rounded-xl'
+        }),
+        label='Phone Number for Contact', 
+        max_length=255,)
+    
+    initial_ip_range = forms.CharField(widget=forms.TextInput(attrs={
+            'placeholder': 'Intitial IP range',
+            'class': 'w-64 py-4 px-6 rounded-xl'
+        }),
+        label='Enter the IP for customer IP range', 
+        max_length=255)

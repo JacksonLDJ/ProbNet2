@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, FileResponse
-from .forms import NmapForm, NetsweeperForm
+from .forms import NmapForm, NetsweeperForm, CustomerForm
 from ProbNet2.scanner import NMAP_Scanner
 from core.data import get_device_data, get_ports_by_device, get_netsweeper_results
 import io
@@ -12,6 +12,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import inch
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from core.models import Customer_Data
 
 from core.models import Device_Data, OS_Info, Netsweeper_Result
 
@@ -45,8 +46,16 @@ def Full_Scan_History(request):
 
 @login_required
 def Quick_Scan_History(request):
+     customers = Customer_Data.objects.all().values('company_name', 'id') #Only pull out the data we need, more secure.
+     choices = [(-1, 'None')]
+     for item in customers:
+          something = (item['id'], item['company_name'])
+          choices.append(something)
+
+     form = NetsweeperForm()
+     form.fields['customer_drop_down'].choices = choices
      return render(request, 'nmap_scanner/netsweeper_scan.html',{
-         'form':NetsweeperForm,
+         'form':form 
      })
 
 @login_required
@@ -89,6 +98,11 @@ def perform_nmap_scan(request):
 
     return render(request, 'nmap_scanner/NMAP_Scan.html', {'form': form})
 
+def customer_data(request):
+     form = CustomerForm()
+     
+     return render(request, 'nmap_scanner/customer_data.html', {'form': form})
+
 @login_required
 #Login to perform Netsweeper function, uses the NMAP_Scanner class in ProbNet2 > scanner.py and then the function netsweeper.
 def netsweeper(request):
@@ -96,14 +110,50 @@ def netsweeper(request):
         form = NetsweeperForm(request.POST)
         if form.is_valid():
             # Get the IP range from the form
-            ip_range = form.cleaned_data['ip_range']
+            customer_id = form.cleaned_data['customer_drop_down']
+            if customer and customer != -1:
+                customer = Customer_Data.objects.get(id = customer_id) #Select statement
+                ip_range = customer.initial_ip_range
+            else:
+                 ip_range = form.cleaned_data['ip_range']
+        
 
             nmap_scanner = NMAP_Scanner()
-            nmap_scanner.netsweeper(ip_range)
+            nmap_scanner.netsweeper(ip_range, customer_id)
             
             return HttpResponseRedirect('/reporting/devices/')
             
     return render(request, 'nmap_scanner/reporting/netsweeper_results.html', {'form': form})
+
+@login_required
+def submit_customer_data(request):
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            
+            company_name = form.cleaned_data['company_name']
+            location = form.cleaned_data['location']
+            contact_name = form.cleaned_data['contact_name']
+            contact_position = form.cleaned_data['contact_position']
+            contact_number = form.cleaned_data['contact_number']
+            initial_ip_range = form.cleaned_data['initial_ip_range']
+
+            customer = Customer_Data.objects.create(
+                company_name = company_name,
+                location = location,
+                contact_name = contact_name,
+                contact_position = contact_position,
+                contact_number = contact_number,
+                initial_ip_range = initial_ip_range
+            )
+
+            customer.save()
+
+            return HttpResponseRedirect('/reporting/devices/')
+
+    return render(request, 'nmap_scanner/customer_data.html', {'form': form})
+
+            
 
 
 @login_required
