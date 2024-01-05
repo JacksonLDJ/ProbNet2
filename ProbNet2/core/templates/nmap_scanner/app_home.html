@@ -29,7 +29,9 @@
             <a href="{% url 'search' %}"
                 class="px-6 py-3 text-lg font-semibold bg-gray-300 text-gray-800 rounded-xl hover:bg-gray-400">Search</a>
             <a href="{% url 'reporting_devices' %}"
-                class="px-6 py-3 text-lg font-semibold bg-gray-300 text-gray-800 rounded-xl hover:bg-gray-400">Reporting</a>
+                class="px-6 py-3 text-lg font-semibold bg-gray-300 text-gray-800 rounded-xl hover:bg-gray-400">Individual Device Reporting</a>
+            <a href="{% url 'reporting_netsweeper' %}"
+                class="px-6 py-3 text-lg font-semibold bg-gray-300 text-gray-800 rounded-xl hover:bg-gray-400">Netsweeper Reports</a>
         </div>
         {% block content %} {% endblock %}
     </div>

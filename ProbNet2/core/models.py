@@ -24,7 +24,7 @@ class Device_Data(models.Model):
     updated_on = models.DateTimeField(auto_now=True, help_text="Time and date this was updated")
     MAC_Address = models.CharField(max_length=256)
     Hardware_Details = models.CharField(max_length=256, null=True, blank=True)
-
+    #Copy line 50
     
 
 
@@ -38,6 +38,7 @@ class Port(models.Model):
 
 #class Customer_Data(models.Model):
     #name = models.CharField()
+    #Initial IP range
 
 
 class Netsweeper_Result(models.Model):

@@ -1,8 +1,8 @@
-from core.models import OS_Info, Port, Device_Data
+from core.models import OS_Info, Port, Device_Data, Netsweeper_Result
 from django.db.models import Count
 
 
-#Function to retrieve data from Device_Data model to display our tables
+#Function to retrieve data from Device_Data model to display tables
 def get_device_data():
     query = Device_Data.objects.filter(
 
@@ -17,4 +17,9 @@ def get_device_data():
 
 def get_ports_by_device(device_id):
     query = Port.objects.filter(device_data_id = device_id).all()
+    return query
+
+
+def get_netsweeper_results():
+    query = Netsweeper_Result.objects.all()
     return query

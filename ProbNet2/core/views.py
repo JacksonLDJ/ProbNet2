@@ -6,14 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, FileResponse
 from .forms import NmapForm, NetsweeperForm
 from ProbNet2.scanner import NMAP_Scanner
-from core.data import get_device_data, get_ports_by_device
+from core.data import get_device_data, get_ports_by_device, get_netsweeper_results
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import inch
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from core.models import Device_Data, OS_Info
+from core.models import Device_Data, OS_Info, Netsweeper_Result
 
 # Create your views here.
 
@@ -46,7 +46,7 @@ def Full_Scan_History(request):
 @login_required
 def Quick_Scan_History(request):
      return render(request, 'nmap_scanner/netsweeper_scan.html',{
-         'form':NetsweeperForm
+         'form':NetsweeperForm,
      })
 
 @login_required
@@ -62,6 +62,12 @@ def reporting_ports(request, device_id):
      return render(request, 'nmap_scanner/reporting/ports.html', {
           "data":get_ports_by_device(device_id)
      })
+
+@login_required
+def reporting_netsweeper(request):
+
+    return render(request, 'nmap_scanner/reporting/netsweeper_results.html',{
+                  "data": get_netsweeper_results()})
 
 #Logic to perform NMAP Scan, uses the NMAP_Scanner class in ProbNet2>scanner.py and NmapForm Core>forms.py to perform the scan.
 @login_required
@@ -97,7 +103,7 @@ def netsweeper(request):
             
             return HttpResponseRedirect('/reporting/devices/')
             
-    return render(request, 'nmap_scanner/NMAP_Scan.html', {'form': form})
+    return render(request, 'nmap_scanner/reporting/netsweeper_results.html', {'form': form})
 
 
 @login_required
@@ -119,8 +125,7 @@ def generate_pdf(request):
         os_info = device.Operating_System  # Retrieve the related OS_Info instance
 
         # Add an empty line as a separator between IP addresses
-        if textob.getX() != inch:  # Check if not at the beginning of the page
-            textob.textLine('')
+        textob.textLine('')
 
         # Host Information - Pulls from the Device_Data model for data.
         textob.textLine(f"IP Address: {device.IP_Address}")
@@ -141,7 +146,41 @@ def generate_pdf(request):
 
     buf.seek(0)
 
-    return FileResponse(buf, as_attachment=True, filename="test.pdf")
+    return FileResponse(buf, as_attachment=True, filename="individual_device_scan.pdf")
+
+@login_required
+#Resources used for PDF Gen: https://docs.djangoproject.com/en/5.0/howto/outputting-pdf/ | https://www.geeksforgeeks.org/generate-a-pdf-in-django/
+def netsweeper_generate_pdf(request):
+    buf = io.BytesIO()
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont("Helvetica", 14)
+
+    try:
+        results_data = Netsweeper_Result.objects.all()
+    except Netsweeper_Result.DoesNotExist():
+        results_data = []
+
+    for result in results_data:
+        
+            textob.textLine('')
+
+            textob.textLine(f"IP Address: {result.ip_address if result else ''}")
+            textob.textLine(f"MAC Address: {result.mac_address if result else ''}")
+            textob.textLine(f"Hostname: {result.hostname if result else ''}")
+            textob.textLine(f"Vendor: {result.vendor if result else ''}")
+            textob.textLine(f"State: {result.state if result else ''}")
+                
+
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=True, filename="netsweeper_results.pdf")
 
 
 @login_required
