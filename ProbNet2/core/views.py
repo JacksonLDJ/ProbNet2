@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, FileResponse
-from .forms import NmapForm
+from .forms import NmapForm, Netsweeper
 from ProbNet2.scanner import NMAP_Scanner
 from core.data import get_device_data, get_ports_by_device
 import io
@@ -83,7 +83,7 @@ def perform_nmap_scan(request):
 #Login to perform Netsweeper function, uses the NMAP_Scanner class in ProbNet2 > scanner.py and then the function netsweeper.
 def netsweeper(request):
      if request.method == 'POST':
-        form = NmapForm(request.POST)
+        form = Netsweeper(request.POST)
         if form.is_valid():
             # Get the IP range from the form
             ip_range = form.cleaned_data['ip_range']

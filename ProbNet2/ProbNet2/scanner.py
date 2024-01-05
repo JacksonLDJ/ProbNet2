@@ -89,5 +89,14 @@ class NMAP_Scanner():
 
         net_scan = scan.nmap_no_portscan(target)
 
+        for ip_address, data in net_scan.items():
+                 mac_address_data = data.get('macaddress', {})
+                 mac_address = mac_address_data.get('addr', '') if mac_address_data else ''
+
+                 hostnames = data.get('hostname', [{}])
+                 hostname = hostnames[0].get('name', '') if hostnames else ''
+
+
+
 
 
