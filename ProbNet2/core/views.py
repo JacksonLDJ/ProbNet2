@@ -183,23 +183,23 @@ def netsweeper_generate_pdf(request):
     return FileResponse(buf, as_attachment=True, filename="netsweeper_results.pdf")
 
 
-@login_required
-def reporting_device(request):
-    device_data = get_device_data()
+# @login_required
+# def reporting_device(request):
+#     device_data = get_device_data()
 
-    page = request.GET.get('page', 1)
-    paginator = Paginator(device_data, 10)#Change number to change number of devices displayed per page
+#     page = request.GET.get('page', 1)
+#     paginator = Paginator(device_data, 10)#Change number to change number of devices displayed per page
 
-    try:
-        devices = paginator.page(page)
-    except PageNotAnInteger:
-        devices = paginator.page(1)
-    except EmptyPage:
-        devices = paginator.page(paginator.num_pages)
+#     try:
+#         devices = paginator.page(page)
+#     except PageNotAnInteger:
+#         devices = paginator.page(1)
+#     except EmptyPage:
+#         devices = paginator.page(paginator.num_pages)
 
-    return render(request, 'nmap_scaner/reporting/devices.html', {
-        "data": devices
-    })
+#     return render(request, 'nmap_scaner/reporting/devices.html', {
+#         "data": devices
+#     })
 
 
 
