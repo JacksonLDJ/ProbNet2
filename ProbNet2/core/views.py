@@ -11,7 +11,6 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import inch
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from core.models import Customer_Data
 
 from core.models import Device_Data, OS_Info, Netsweeper_Result
@@ -110,7 +109,7 @@ def netsweeper(request):
         form = NetsweeperForm(request.POST)
         if form.is_valid():
             # Get the IP range from the form
-            customer_id = form.cleaned_data['customer_drop_down']
+            customer_id = form.cleaned_data['customer_drop_down'] ##Checking to make sure that the custoemr ID isn't -1 or unspecified, and calls db to get customer info if it passes, sets the ip_range to the one on the customer data
             if customer and customer != -1:
                 customer = Customer_Data.objects.get(id = customer_id) #Select statement
                 ip_range = customer.initial_ip_range
