@@ -128,7 +128,7 @@ def netsweeper(request):
             nmap_scanner = NMAP_Scanner()
             nmap_scanner.netsweeper(ip_range, customer_id)
 
-            return HttpResponseRedirect('/reporting/devices/')
+            return HttpResponseRedirect('/reporting/netsweeper_results/')
 
     return render(request, 'nmap_scanner/reporting/netsweeper_results.html', {'form': form})
 
