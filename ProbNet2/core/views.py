@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, FileResponse
 from .forms import NmapForm, NetsweeperForm, CustomerForm
 from ProbNet2.scanner import NMAP_Scanner
-from core.data import get_device_data, get_ports_by_device, get_netsweeper_results
+from core.data import get_device_data, get_ports_by_device, get_netsweeper_results, get_customer_data
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
@@ -57,6 +57,13 @@ def Quick_Scan_History(request):
          'form':form 
      })
 
+
+@login_required
+def reporting_customer(request):
+     return render(request, 'nmap_scanner/reporting/customer_info.html', {
+          "data":get_customer_data()
+     })
+
 @login_required
 def reporting_devices(request):
      
@@ -101,6 +108,7 @@ def customer_data(request):
      form = CustomerForm()
      
      return render(request, 'nmap_scanner/customer_data.html', {'form': form})
+
 
 def netsweeper(request):
     form = NetsweeperForm()

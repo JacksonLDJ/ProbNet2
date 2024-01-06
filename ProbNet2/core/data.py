@@ -1,4 +1,4 @@
-from core.models import OS_Info, Port, Device_Data, Netsweeper_Result
+from core.models import OS_Info, Port, Device_Data, Netsweeper_Result, Customer_Data
 from django.db.models import Count
 
 
@@ -22,4 +22,8 @@ def get_ports_by_device(device_id):
 
 def get_netsweeper_results():
     query = Netsweeper_Result.objects.all()
+    return query
+
+def get_customer_data():
+    query = Customer_Data.objects.all()
     return query

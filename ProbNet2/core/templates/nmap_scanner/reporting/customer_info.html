@@ -17,29 +17,34 @@
 
     <div class="container mx-auto mt-6 bg-gray-100 p-8 rounded-md shadow-md">
 
+        <div class="mb-8">
+            <a href="{% url 'generate_pdf' %}" class="bg-blue-500 text-white py-2 px-4">Generate PDF Report</a>
+        </div>
+
         <table class="min-w-full bg-white border border-gray-300 text-center">
             <thead>
                 <tr>
-                    <th class="py-2 px-4 border-b">Portid</th>
-                    <th class="py-2 px-4 border-b">Reason</th>
-                    <th class="py-2 px-4 border-b">Reason TTL</th>
-                    <th class="py-2 px-4 border-b">Device Data</th>
+                    <th class="py-2 px-4 border-b">Company Name</th>
+                    <th class="py-2 px-4 border-b">Location</th>
+                    <th class="py-2 px-4 border-b">Contact Name</th>
+                    <th class="py-2 px-4 border-b">Contact Number</th>
+                    <th class="py-2 px-4 border-b">Contact Position</th>
+                    <th class="py-2 px-4 border-b">Initial IP Range</th>
                 </tr>
             </thead>
             <tbody>
                 <!--Displaying table data resources used: https://stackoverflow.com/questions/7287027/displaying-a-table-in-django-from-database-->
-
                 {% for row in data %}
                 <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b">{{ row.portid }}</td>
-                    <td class="py-2 px-4 border-b">{{ row.reason }}</td>
-                    <td class="py-2 px-4 border-b">{{ row.reason_ttl }}</td>
-                    <td class="py-2 px-4 border-b">{{ row.device_data }}</td>
-                </tr>
+                    <td class="py-2 px-4 border-b">{{ row.company_name }}</td>
+                    <td class="py-2 px-4 border-b">{{ row.location }}</td>
+                    <td class="py-2 px-4 border-b">{{ row.contact_name }}</td>
+                    <td class="py-2 px-4 border-b">{{ row.contact_number }}</td>
+                    <td class="py-2 px-4 border-b">{{ row.contact_position }}</td>
+                    <td class="py-2 px-4 border-b">{{ row.initial_ip_range }}</td>
                 {% endfor %}
             </tbody>
         </table>
-
     </div>
 
 </body>
