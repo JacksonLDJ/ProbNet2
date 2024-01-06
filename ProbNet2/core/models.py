@@ -13,6 +13,9 @@ class Customer_Data(models.Model):
     contact_number = models.CharField(max_length=256)
     initial_ip_range = models.CharField(max_length=256)
 
+    def __str__(self):
+        return self.company_name
+
 class OS_Info(models.Model):
 
     type = models.CharField(max_length=256)
