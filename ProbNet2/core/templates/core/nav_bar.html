@@ -3,10 +3,10 @@
 <nav class="py-6 px-6 flex justify-between items-center mx-auto">
     <div class="flex items-center space-x-6">
         <a href="{% url 'app_home' %}">Home</a>
-        <a href="{% url 'search' %}">Search</a>
-        <a href="{% url 'netsweeper_scan' %}">Quick Scan History</a>
-        <a href="{% url 'NMAP_Scan' %}">NMAP Scan</a>
-        <a href="{% url 'generate_pdf' %}">Generate PDF</a>
+        <a href="{% url 'customer_data_report' %}">Customer Reports</a>
+        <a href="{% url 'netsweeper_scan' %}">Netsweeper Scan</a>
+        <a href="{% url 'NMAP_Scan' %}">Device Scan</a>
+        <a href="{% url 'reporting_netsweeper' %}">Netsweeper Reports</a>
     </div>
 
 </nav>
@@ -15,3 +15,4 @@
     {% csrf_token %}
     <button type="submit" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Logout</button>
 </form>
+
