@@ -90,7 +90,7 @@ class NMAP_Scanner():
         net_scan = scan.nmap_no_portscan(target)
 
         for ip_address, data in net_scan.items():
-                 if 'mac_address' not in data: #Ensures that MAC address is in data generated, resolves ARP issue
+                 if 'macaddress' not in data: #Ensures that MAC address is in data generated, resolves ARP issue
                      continue 
                  mac_address_data = data.get('macaddress', {})
                  mac_address = mac_address_data.get('addr', '') if mac_address_data else ''
@@ -114,5 +114,5 @@ class NMAP_Scanner():
                          hostname = hostname,
                          vendor = vendor,
                          state = state, 
-                         customer_id = customer_id_checked
+                         customer_data_id = customer_id_checked
                      )

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.validators import RegexValidator
+from .models import Customer_Data
 
 #Forms which are used for the login page of the website.
 
@@ -38,20 +39,28 @@ class NmapForm(forms.Form):
         label='Enter Your IP Range', 
         max_length=255,
         validators=[ip_validator])
+#https://stackoverflow.com/questions/29247654/python-how-to-use-constructor-with-django-form-class
 
-
-class NetsweeperForm(forms.Form):#https://stackoverflow.com/questions/29247654/python-how-to-use-constructor-with-django-form-class
-    
-    customer_drop_down = forms.ChoiceField()
-
+class NetsweeperForm(forms.Form):
+    customer_drop_down = forms.ChoiceField(choices=[], required=False)
     ip_range = forms.CharField(
         widget=forms.TextInput(attrs={
             'placeholder': 'IP Address',
             'class': 'w-full py-4 px-6 rounded-xl'
         }),
-        label='Enter Your IP Range', 
-        max_length=255)
-        
+        label='Enter Your IP Range',
+        max_length=255,
+        required=False,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(NetsweeperForm, self).__init__(*args, **kwargs)
+        customers = Customer_Data.objects.all().values('company_name', 'id')
+        choices = [(-1, 'None')]
+        for item in customers:
+            something = (item['id'], item['company_name'])
+            choices.append(something)
+        self.fields['customer_drop_down'].choices = choices
     
 
 class CustomerForm(forms.Form): 

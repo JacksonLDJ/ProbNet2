@@ -102,26 +102,26 @@ def customer_data(request):
      
      return render(request, 'nmap_scanner/customer_data.html', {'form': form})
 
-@login_required
-#Login to perform Netsweeper function, uses the NMAP_Scanner class in ProbNet2 > scanner.py and then the function netsweeper.
 def netsweeper(request):
+    form = NetsweeperForm()
+
     if request.method == 'POST':
         form = NetsweeperForm(request.POST)
         if form.is_valid():
             # Get the IP range from the form
-            customer_id = form.cleaned_data['customer_drop_down'] ##Checking to make sure that the custoemr ID isn't -1 or unspecified, and calls db to get customer info if it passes, sets the ip_range to the one on the customer data
-            if customer and customer != -1:
-                customer = Customer_Data.objects.get(id = customer_id) #Select statement
+            customer_id = form.cleaned_data['customer_drop_down']
+
+            if customer_id != '-1':
+                customer = Customer_Data.objects.get(id=customer_id)
                 ip_range = customer.initial_ip_range
             else:
-                 ip_range = form.cleaned_data['ip_range']
-        
+                ip_range = form.cleaned_data['ip_range']
 
             nmap_scanner = NMAP_Scanner()
             nmap_scanner.netsweeper(ip_range, customer_id)
-            
+
             return HttpResponseRedirect('/reporting/devices/')
-            
+
     return render(request, 'nmap_scanner/reporting/netsweeper_results.html', {'form': form})
 
 @login_required
