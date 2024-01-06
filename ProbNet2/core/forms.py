@@ -25,7 +25,7 @@ ip_validator = RegexValidator(
 
 ip_validator_range = RegexValidator(
     regex=r'^(?:[0-9]{1,3}\.){3}[0-9]{1,3}(?:\/[0-9]{1,2})?$',
-    message='Enter a valid IP address.',
+    message='Enter a valid IP address range. Must include subnet mask.',
     code='invalid_ip'
 )
 
@@ -105,4 +105,5 @@ class CustomerForm(forms.Form):
             'class': 'w-64 py-4 px-6 rounded-xl'
         }),
         label='Enter the IP for customer IP range', 
-        max_length=255)
+        max_length=255, 
+        validators=[ip_validator_range])

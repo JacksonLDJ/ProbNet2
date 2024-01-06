@@ -45,8 +45,15 @@
                 
             </div>
 
+        
             <div class="mb-4">
-                <label for="initial_ip_range" class="block text-gray-700 text-sm font-bold mb-2">Initial IP Range: {{ form.initial_ip_range }}</label>
+                
+                <label for="initial_ip_range" class="block text-gray-700 text-sm font-bold mb-2">Initial IP Range: {{ form.initial_ip_range }}
+                {% if form.errors.initial_ip_range %}
+                <p class="text-red-500">{{ form.errors.initial_ip_range.0 }}</p>
+                {% endif %}
+                    
+                </label>
                 
             </div>
 
