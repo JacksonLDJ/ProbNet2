@@ -34,6 +34,9 @@ class Device_Data(models.Model):
     MAC_Address = models.CharField(max_length=256)
     Hardware_Details = models.CharField(max_length=256, null=True, blank=True)
     customer_data = models.ForeignKey(Customer_Data, on_delete=models.CASCADE, related_name='customers', null = True, blank = True)
+
+    def __str__(self):
+        return self.IP_Address
     
 
 class Port(models.Model):
