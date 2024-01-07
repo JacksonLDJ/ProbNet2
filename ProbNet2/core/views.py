@@ -156,7 +156,7 @@ def submit_customer_data(request):
 
             customer.save()
 
-            return HttpResponseRedirect('/reporting/devices/')
+            return HttpResponseRedirect('/customer_data_report/')
 
     return render(request, 'nmap_scanner/customer_data.html', {'form': form})
 
