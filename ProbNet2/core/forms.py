@@ -59,8 +59,8 @@ class NetsweeperForm(forms.Form):
         customers = Customer_Data.objects.all().values('company_name', 'id')
         choices = [(-1, 'None')]
         for item in customers:
-            something = (item['id'], item['company_name'])
-            choices.append(something)
+            choice = (item['id'], item['company_name'])
+            choices.append(choice)
         self.fields['customer_drop_down'].choices = choices
     
 
