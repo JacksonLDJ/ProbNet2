@@ -9,3 +9,18 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = ('company_name', 'initial_ip_range')
     ordering = ('company_name', )
     search_fields = ('company_name', )
+
+
+@admin.register(Netsweeper_Result)
+class NetsweperAdmin(admin.ModelAdmin):
+
+    list_display = ('ip_address', )
+    ordering = ('ip_address', )
+    seearch_fields = ('ip_address', )
+
+@admin.register(Device_Data)
+class DeviceAdmin(admin.ModelAdmin):
+
+    list_display = ('IP_Address', )
+    ordering = ('IP_Address', )
+    seearch_fields = ('IP_Address', )
