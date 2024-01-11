@@ -13,6 +13,7 @@ class Customer_Data(models.Model):
     contact_number = models.CharField(max_length=256)
     initial_ip_range = models.CharField(max_length=256)
 
+    #Used to define name within Django's admin backend
     def __str__(self):
         return self.company_name
 
@@ -23,6 +24,9 @@ class OS_Info(models.Model):
     osfamily = models.CharField(max_length=256)
     osgen = models.CharField(max_length=256)
     accuracy = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.osfamily
 
 
 class Device_Data(models.Model):

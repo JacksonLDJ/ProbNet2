@@ -33,7 +33,7 @@ class NMAP_Scanner():
     https://stackoverflow.com/a/35485003/9655579
     https://stackoverflow.com/a/2710949/9655579"""
     def extract_operating_system(self, host_data, host_key):
-        if 'osmatch' in host_data and len(host_data['osmatch']) > 0: #Checks for osmatch in host_data, length of osmatch dictionary is greater than 0
+        if 'osmatch' in host_data and len(host_data['osmatch']) > 0: #Checks for osmatch in host_data and ensures that the length of the osmatch dictionary is greater than 0
             osmatch = host_data['osmatch'][0]
 
             if 'osclass' in osmatch:
@@ -69,7 +69,7 @@ class NMAP_Scanner():
 
         return None
     
-    #Function to extract ports from NMAP scan
+    #Function to extract ports from the NMAP scan
     def extract_port_data(self, host_data, device_data):
         if "ports" in host_data:
             for port_data in host_data["ports"]:
@@ -83,14 +83,14 @@ class NMAP_Scanner():
 
                 port.save()
 
-
+    #Netsweeper function to perofrm NMAP's host discovery. Uses the customer_id from customer_data to get the initial_ip_range to scan.
     def netsweeper(self, target, customer_id):
         scan = nmap3.NmapHostDiscovery()
 
         net_scan = scan.nmap_no_portscan(target)
 
         for ip_address, data in net_scan.items():
-                 if 'macaddress' not in data: #Ensures that MAC address is in data generated, resolves ARP issue
+                 if 'macaddress' not in data: #Ensures that MAC address is in data generated, resolves ARP issue at the end of the scan
                      continue 
                  mac_address_data = data.get('macaddress', {})
                  mac_address = mac_address_data.get('addr', '') if mac_address_data else ''
@@ -107,7 +107,7 @@ class NMAP_Scanner():
                  ip_address = ip_address
 
                  customer_id_checked = customer_id if customer_id and customer_id != 1 else None
-                 if state.lower() == 'up':
+                 if state.lower() == 'up': #Ensures that only devices that are online are written to the table
                      Netsweeper_Result.objects.create(
                          ip_address = ip_address,
                          mac_address = mac_address,

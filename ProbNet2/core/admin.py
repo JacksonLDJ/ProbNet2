@@ -16,11 +16,11 @@ class NetsweperAdmin(admin.ModelAdmin):
 
     list_display = ('ip_address', )
     ordering = ('ip_address', )
-    seearch_fields = ('ip_address', )
+    search_fields = ('ip_address', )
 
 @admin.register(Device_Data)
 class DeviceAdmin(admin.ModelAdmin):
 
     list_display = ('IP_Address', )
     ordering = ('IP_Address', )
-    seearch_fields = ('IP_Address', )
+    search_fields = ('IP_Address', )
