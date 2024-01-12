@@ -13,7 +13,7 @@ class Customer_Data(models.Model):
     contact_number = models.CharField(max_length=256)
     initial_ip_range = models.CharField(max_length=256)
 
-    #Used to define name within Django's admin backend
+    #Used to define name within Django's admin backend, this was done for all of the tables that the user would need to edit.
     def __str__(self):
         return self.company_name
 

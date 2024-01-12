@@ -12,8 +12,9 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.units import inch
 from core.models import Customer_Data
-
 from core.models import Device_Data, OS_Info, Netsweeper_Result
+
+#Resources used: https://docs.djangoproject.com/en/5.0/topics/http/views/ | https://docs.djangoproject.com/en/5.0/howto/outputting-pdf/ | https://www.geeksforgeeks.org/generate-a-pdf-in-django/
 
 # Create your views here.
 
@@ -39,9 +40,6 @@ def NMAP_Scan(request):
          'form':NmapForm
      })
 
-@login_required
-def Full_Scan_History(request):
-     return render(request, 'nmap_scanner/search.html')
 
 #Renders the Netsweeper page and provides the dropd down menu for customers within the netsweeper_scan.html page
 @login_required
@@ -136,7 +134,7 @@ def netsweeper(request):
 
     return render(request, 'nmap_scanner/reporting/netsweeper_results.html', {'form': form})
 
-#Writes the data to the customer_database once the user clicks submit on the form
+#Writes the data to the customer_database once the user clicks submit on the CustomerForm
 @login_required
 def submit_customer_data(request):
     if request.method == 'POST':
@@ -213,7 +211,7 @@ def generate_pdf(request):
 
 @login_required
 #Resources used for PDF Gen: https://docs.djangoproject.com/en/5.0/howto/outputting-pdf/ | https://www.geeksforgeeks.org/generate-a-pdf-in-django/
-#This function was create but was taken out due to issues with the PDF formatting.
+#This function was created but was taken out due to issues with the PDF formatting.
 def netsweeper_generate_pdf(request):
     buf = io.BytesIO()
     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)

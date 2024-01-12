@@ -1,4 +1,5 @@
 from django.contrib import admin
+#Resources used for this were: https://docs.djangoproject.com/en/5.0/ref/contrib/admin/
 
 from .models import *
 

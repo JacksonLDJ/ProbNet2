@@ -1,6 +1,6 @@
 from core.models import OS_Info, Port, Device_Data, Netsweeper_Result, Customer_Data
 from django.db.models import Count
-
+#Resources used: https://docs.djangoproject.com/en/5.0/topics/db/queries/
 
 #Function to retrieve data from Device_Data model to display tables
 def get_device_data():

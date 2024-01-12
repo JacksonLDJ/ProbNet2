@@ -3,6 +3,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.core.validators import RegexValidator
 from .models import Customer_Data
 
+#Resources used: https://docs.djangoproject.com/en/5.0/topics/forms/ | https://stackoverflow.com/questions/29247654/python-how-to-use-constructor-with-django-form-class
+
 #Forms which are used for the login page of the website.
 
 class LoginForm(AuthenticationForm):
@@ -55,9 +57,9 @@ class NetsweeperForm(forms.Form):
 
     #Solution for this found: #https://stackoverflow.com/questions/29247654/python-how-to-use-constructor-with-django-form-class
     def __init__(self, *args, **kwargs):
-        super(NetsweeperForm, self).__init__(*args, **kwargs)
-        customers = Customer_Data.objects.all().values('company_name', 'id')
-        choices = [(-1, 'None')]
+        super(NetsweeperForm, self).__init__(*args, **kwargs) #Calls the constructor of the parent class forms.Form to ensure that it is initalised.
+        customers = Customer_Data.objects.all().values('company_name', 'id') #Takes all of the information from the Customer Data table and extracts the values company_name and id to display to the user in the drop down form
+        choices = [(-1, 'None')] #The Netsweeper function originally allowed the user to enter a manual IP address, hence the NONE option to allow for manual entry. However, bugs arose so this was removed but the check was left in.
         for item in customers:
             choice = (item['id'], item['company_name'])
             choices.append(choice)

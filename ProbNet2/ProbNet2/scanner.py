@@ -106,7 +106,7 @@ class NMAP_Scanner():
 
                  ip_address = ip_address
 
-                 customer_id_checked = customer_id if customer_id and customer_id != 1 else None
+                 customer_id_checked = customer_id if customer_id and customer_id != 1 else None #Grabs the customer ID from the customer ID table and writes it as a foreign key link to the Netsweeper table.
                  if state.lower() == 'up': #Ensures that only devices that are online are written to the table
                      Netsweeper_Result.objects.create(
                          ip_address = ip_address,
