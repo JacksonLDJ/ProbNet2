@@ -1,7 +1,7 @@
 
 # ProbNet 2
 
-This Django application has been created for a University Assignment. It uses Python's NMAP library to perform NMAP scans and also has the function of performing a network sweep. Once scanned, this information is saved to a SQL Workbench Database. This can also be views within the application.
+ProbNet 2 is a University of Bolton Assignment project that was completed for SWE5208 - Business Software Development module in my Digitial Technologies Systems: Cybersecurity degree apprenticeship. The module was split into two assignments, the first being the planning and preperation of the web application including the design of the database to be used. The second half was to implement this plans and then present the work to the "client". Explaining the features and the design choices made. Ultimately this piece of work uses Django for the framework, taking advantage of their ORM and back-end for their user creation and being able to make changes to the SQL Database within the app itself. My first web application which is basic in it's scope but met the onjectives set by the module guide. 
 
 
 
@@ -10,9 +10,15 @@ This Django application has been created for a University Assignment. It uses Py
 
 * Django
 * Python
+
+## Design
+
+Tailwinds CSS
+
 ## Database
 
 * MySQL Workbench
+* 
 ## Installation
 
 This application uses NMAP, which must be installed on your local system, this can be installed [here.](https://nmap.org/download.html)
@@ -34,8 +40,9 @@ Finally, to create the database and tables, in your terminal, browse to the Prob
 
 In your terinal, type: cd .\ProbNet2\ and then python manage.py runserver.
 
-A web page will load, and the login page appears. Enter your login details and then use the app.
+A web page will load and the login page appears. Enter your root login details to access the app.
 
-In Perform a device scan, you can simply enter an IP address, this will then run an NMAP scan and write the information back to your SQLWorkbench. 
+Once signed in, you're then able to create customers for the network discovery part of the web application. There are certain mandatory fields, including the IP Range for the company. This newly created customer is then written back to the SQL Database.
 
-in Netsweeper scan, you can 
+Once a scan has been performed, it is then possible to browse the discovered hosts and perform in-depth scans including scanned ports.
+
