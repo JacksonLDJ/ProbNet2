@@ -38,7 +38,7 @@ Finally, to create the database and tables, in your terminal, browse to the Prob
 
 ## How to run it
 
-In your terinal, type: cd .\ProbNet2\ and then python manage.py runserver.
+In your terminal, type: cd .\ProbNet2\ and then python manage.py runserver.
 
 A web page will load and the login page appears. Enter your root login details to access the app.
 
